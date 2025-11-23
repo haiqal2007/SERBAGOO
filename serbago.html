@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Serbago — Layanan Serbaguna</title>
+  <meta name="description" content="Serbago — pesan ojek, taxi, home service, servis elektronik, joki tugas, dan cleaning service dalam satu aplikasi web." />
+  <style>
+    :root{
+      --blue-light:#dff6ff; /* biru muda */
+      --blue:#66b2ff;
+      --blue-dark:#0b3b66; /* dongker */
+      --orange:#ff8a3d; /* oren */
+      --muted:#6b7280;
+      --card:#ffffff;
+      --glass: rgba(255,255,255,0.7);
+      --radius:14px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:linear-gradient(180deg,var(--blue-light),#fff);
+      color:#0f172a;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+
+    /* Container */
+    .container{max-width:1100px;margin:0 auto;padding:20px}
+
+    /* NAV */n
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:48px;height:48px;border-radius:8px;background:var(--blue-dark);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700}
+    .brand h1{margin:0;font-size:18px;color:var(--blue-dark)}
+    .brand p{margin:0;font-size:12px;color:var(--muted)}
+    .nav .cta{background:var(--orange);color:#fff;padding:8px 12px;border-radius:10px;border:none;cursor:pointer}
+
+    /* HERO */
+    .hero{display:grid;grid-template-columns:1fr;gap:18px;align-items:center;padding:18px 0}
+    .hero-left h2{font-size:28px;margin:0;color:var(--blue-dark)}
+    .hero-left p{margin:8px 0;color:var(--muted)}
+    .search-row{display:flex;gap:8px;margin-top:12px}
+    .search-row input{flex:1;padding:10px;border-radius:10px;border:1px solid #e6eef6}
+    .btn{padding:10px 14px;border-radius:10px;border:none;cursor:pointer}
+    .btn-primary{background:var(--blue-dark);color:#fff}
+    .btn-ghost{background:#fff;border:1px solid var(--orange);color:var(--orange)}
+
+    /* hero illustration */
+    .hero-illustration{min-height:220px;border-radius:18px;background:linear-gradient(180deg,#e6f7ff,#fff);display:flex;align-items:center;justify-content:center;border:2px dashed rgba(27,86,140,0.08);color:var(--muted)}
+
+    /* services */
+    .section{margin-top:18px}
+    .section h3{margin:0;font-size:18px;color:var(--blue-dark)}
+    .services-grid{display:grid;grid-template-columns:repeat(1,1fr);gap:12px;margin-top:12px}
+    .service{display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;background:var(--card);box-shadow:0 6px 18px rgba(11,59,102,0.06)}
+    .svc-icon{width:52px;height:52px;border-radius:10px;background:linear-gradient(180deg,var(--blue-light),#fff);display:flex;align-items:center;justify-content:center;font-size:22px}
+    .svc-title{font-weight:600;color:var(--blue-dark)}
+    .svc-sub{color:var(--muted);font-size:13px}
+    .svc-actions{margin-left:auto}
+    .svc-actions button{background:var(--orange);color:#fff;border:none;padding:8px 10px;border-radius:10px;cursor:pointer}
+
+    /* grid responsive */
+    @media(min-width:640px){
+      .hero{grid-template-columns:1fr 420px}
+      .services-grid{grid-template-columns:repeat(2,1fr)}
+    }
+    @media(min-width:920px){
+      .services-grid{grid-template-columns:repeat(3,1fr)}
+    }
+
+    /* how it works */
+    .how-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:12px}
+    .how-card{padding:14px;background:var(--card);border-radius:12px}
+    @media(min-width:760px){.how-grid{grid-template-columns:repeat(3,1fr)}}
+
+    /* orders */
+    .orders{margin-top:16px}
+    .order-item{display:flex;justify-content:space-between;gap:12px;padding:12px;border-radius:12px;background:var(--card);box-shadow:0 6px 14px rgba(11,59,102,0.04)}
+    .order-meta{color:var(--muted);font-size:13px}
+
+    /* modal */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.45);display:none;align-items:center;justify-content:center;padding:20px}
+    .modal{width:100%;max-width:560px;background:#fff;border-radius:14px;padding:18px;box-shadow:0 20px 50px rgba(2,6,23,0.4)}
+    .modal.show{display:flex}
+    .form-row{margin-top:10px}
+    .form-row label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+    .form-row input,.form-row textarea{width:100%;padding:10px;border-radius:10px;border:1px solid #e6eef6}
+    .modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
+
+    /* footer */
+    footer{margin-top:32px;padding:18px 0;color:var(--muted);font-size:13px;border-top:1px solid rgba(11,59,102,0.03)}
+
+    /* small helpers */
+    .muted{color:var(--muted)}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,138,61,0.08);color:var(--orange);font-weight:600}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="nav">
+      <div class="brand">
+        <div class="logo">S</div>
+        <div>
+          <h1>Serbago</h1>
+          <p>Solusi layanan serbaguna</p>
+        </div>
+      </div>
+      <div>
+        <button class="btn btn-ghost">Masuk / Daftar</button>
+        <button class="btn btn-primary" style="margin-left:10px">Hubungi</button>
+      </div>
+    </nav>
+
+    <main>
+      <section class="hero">
+        <div class="hero-left">
+          <h2>Semua layanan dalam satu aplikasi — cepat, aman, mudah</h2>
+          <p>Dari ojek & taxi sampai service elektronik dan cleaning — pesan layanan profesional langsung ke rumah Anda.</p>
+
+          <div class="search-row">
+            <input id="searchInput" placeholder="Cari layanan atau lokasi..." />
+            <button class="btn btn-primary" onclick="document.getElementById('searchInput').focus()">Cari</button>
+            <button class="btn btn-ghost">Buat Pesanan</button>
+          </div>
+
+          <div style="margin-top:14px;display:flex;gap:12px;align-items:center">
+            <div style="padding:10px;border-radius:10px;background:var(--blue-light);display:flex;gap:8px;align-items:center">
+              <div style="width:14px;height:14px;border-radius:50%;background:var(--blue);"></div>
+              <div style="width:14px;height:14px;border-radius:50%;background:var(--blue-dark);"></div>
+              <div style="width:14px;height:14px;border-radius:50%;background:var(--orange);"></div>
+            </div>
+            <div class="muted">Warna tema: Biru muda · Dongker · Oren</div>
+          </div>
+        </div>
+
+        <div class="hero-illustration" aria-hidden="true">Peta / Ilustrasi kendaraan</div>
+      </section>
+
+      <section class="section">
+        <h3>Layanan Populer</h3>
+        <p class="muted">Pilih layanan yang Anda butuhkan — pesan dalam 1 menit.</p>
+
+        <div class="services-grid" id="servicesGrid">
+          <!-- services injected by JS -->
+        </div>
+      </section>
+
+      <section class="section">
+        <h3>Cara Kerja</h3>
+        <div class="how-grid">
+          <div class="how-card">
+            <strong>1. Pilih layanan</strong>
+            <div class="muted" style="margin-top:8px">Pilih ojek, taxi, atau layanan rumah sesuai kebutuhan.</div>
+          </div>
+          <div class="how-card">
+            <strong>2. Isi lokasi</strong>
+            <div class="muted" style="margin-top:8px">Isi pickup, tujuan, dan catatan khusus.</div>
+          </div>
+          <div class="how-card">
+            <strong>3. Driver / teknisi datang</strong>
+            <div class="muted" style="margin-top:8px">Driver atau teknisi terdekat akan menerima pesanan dan menjemput.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section orders">
+        <h3>Pesanan Anda</h3>
+        <div id="ordersList" style="margin-top:12px">
+          <div class="muted">Belum ada pesanan — pesan layanan sekarang.</div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <div>
+          <strong style="color:var(--blue-dark)">Serbago</strong>
+          <div>© <span id="year"></span> Serbago — Semua hak dilindungi</div>
+        </div>
+        <div class="muted">Butuh bantuan? <span class="pill">Hubungi kami</span></div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Modal -->
+  <div id="modalBackdrop" class="modal-backdrop">
+    <div class="modal">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-size:13px;color:var(--muted)">Memesan</div>
+          <div id="modalServiceTitle" style="font-weight:700;color:var(--blue-dark);font-size:18px"></div>
+        </div>
+        <button id="closeModal" title="Tutup">✕</button>
+      </div>
+
+      <form id="bookingForm">
+        <div class="form-row">
+          <label>Lokasi penjemputan</label>
+          <input id="pickup" required />
+        </div>
+        <div class="form-row">
+          <label>Tujuan (opsional)</label>
+          <input id="destination" />
+        </div>
+        <div class="form-row">
+          <label>Catatan</label>
+          <textarea id="notes" rows="3"></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" id="cancelBtn" class="btn">Batal</button>
+          <button type="submit" class="btn btn-primary">Pesan Sekarang</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Data layanan
+    const services = [
+      { id: 'ojek', title: 'Ojek Online', subtitle: 'Antar cepat & aman', icon: '🏍️' },
+      { id: 'taxi', title: 'Taxi Online', subtitle: 'Driver profesional', icon: '🚕' },
+      { id: 'home', title: 'Home Service', subtitle: 'Tukang & ahli datang ke rumah', icon: '🧰' },
+      { id: 'elektronik', title: 'Service Elektronik', subtitle: 'Perbaikan TV, kulkas, dll', icon: '🔌' },
+      { id: 'joki', title: 'Joki Tugas', subtitle: 'Bantu selesaikan tugas digital', icon: '🧑‍💻' },
+      { id: 'cleaning', title: 'Cleaning Service', subtitle: 'Bersih-bersih profesional', icon: '🧹' }
+    ];
+
+    // render services
+    const servicesGrid = document.getElementById('servicesGrid');
+    services.forEach(s => {
+      const card = document.createElement('div');
+      card.className = 'service';
+      card.innerHTML = `
+        <div class="svc-icon">${s.icon}</div>
+        <div>
+          <div class="svc-title">${s.title}</div>
+          <div class="svc-sub">${s.subtitle}</div>
+        </div>
+        <div class="svc-actions">
+          <button data-id="${s.id}" data-title="${s.title}">Pesan</button>
+        </div>
+      `;
+      servicesGrid.appendChild(card);
+    });
+
+    // modal and booking logic
+    const modalBackdrop = document.getElementById('modalBackdrop');
+    const modalTitle = document.getElementById('modalServiceTitle');
+    const bookingForm = document.getElementById('bookingForm');
+    const ordersList = document.getElementById('ordersList');
+    const yearSpan = document.getElementById('year');
+    yearSpan.textContent = new Date().getFullYear();
+
+    let selectedServiceId = null;
+
+    document.querySelectorAll('[data-id]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        selectedServiceId = btn.dataset.id;
+        modalTitle.textContent = btn.dataset.title;
+        modalBackdrop.style.display = 'flex';
+      });
+    });
+
+    document.getElementById('closeModal').addEventListener('click', closeModal);
+    document.getElementById('cancelBtn').addEventListener('click', closeModal);
+    modalBackdrop.addEventListener('click', (e) => { if(e.target === modalBackdrop) closeModal(); });
+
+    function closeModal(){
+      modalBackdrop.style.display = 'none';
+      bookingForm.reset();
+    }
+
+    // orders storage
+    const STORAGE_KEY = 'serbago_orders_v1';
+    function loadOrders(){
+      try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }catch{ return []; }
+    }
+    function saveOrders(orders){ localStorage.setItem(STORAGE_KEY, JSON.stringify(orders)); }
+
+    function renderOrders(){
+      const orders = loadOrders();
+      ordersList.innerHTML = '';
+      if(orders.length === 0){ ordersList.innerHTML = '<div class="muted">Belum ada pesanan — pesan layanan sekarang.</div>'; return; }
+      orders.forEach(o => {
+        const el = document.createElement('div');
+        el.className = 'order-item';
+        el.innerHTML = `
+          <div>
+            <div style="font-weight:600;color:var(--blue-dark)">${o.service}</div>
+            <div class="order-meta">${o.pickup} → ${o.destination || '-'} · ${o.time}</div>
+            <div class="muted" style="margin-top:6px">${o.notes || ''}</div>
+          </div>
+          <div style="text-align:right">
+            <div class="muted">${o.status}</div>
+            <button style="margin-top:8px;padding:6px 10px;border-radius:8px;border:1px solid #e6eef6;background:#fff">Detail</button>
+          </div>
+        `;
+        ordersList.appendChild(el);
+      });
+    }
+
+    bookingForm.addEventListener('submit', (ev) => {
+      ev.preventDefault();
+      const pickup = document.getElementById('pickup').value.trim();
+      const destination = document.getElementById('destination').value.trim();
+      const notes = document.getElementById('notes').value.trim();
+      if(!pickup){ alert('Masukkan lokasi penjemputan'); return; }
+      const service = services.find(s => s.id === selectedServiceId)?.title || 'Layanan';
+      const orders = loadOrders();
+      const newOrder = { id: Date.now(), service, pickup, destination, notes, status: 'Menunggu konfirmasi', time: new Date().toLocaleString() };
+      orders.unshift(newOrder);
+      saveOrders(orders);
+      renderOrders();
+      closeModal();
+    });
+
+    // initial render
+    renderOrders();
+  </script>
+</body>
+</html>
